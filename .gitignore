@@ -41,5 +41,3 @@ coverage.xml
 # Local testing and credentials
 google-ads.yaml
 .venv/
-test_connection.py
-get_refresh_token.py
