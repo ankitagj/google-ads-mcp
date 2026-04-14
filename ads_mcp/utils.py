@@ -70,13 +70,21 @@ def _get_login_customer_id() -> str | None:
 
 
 def _get_googleads_client() -> GoogleAdsClient:
-    # Look for google-ads.yaml either in the current directory or the home directory
-    import os
-    yaml_path = "google-ads.yaml"
-    if not os.path.exists(yaml_path):
-        yaml_path = os.path.expanduser("~/google-ads.yaml")
-    
-    return GoogleAdsClient.load_from_storage(path=yaml_path)
+    args = {
+        "credentials": _create_credentials(),
+        "developer_token": _get_developer_token(),
+        "use_proto_plus": True,
+    }
+
+    # If the login-customer-id is not set, avoid setting None.
+    login_customer_id = _get_login_customer_id()
+
+    if login_customer_id:
+        args["login_customer_id"] = login_customer_id
+
+    client = GoogleAdsClient(**args)
+
+    return client
 
 
 def get_googleads_service(serviceName: str) -> GoogleAdsServiceClient:

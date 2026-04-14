@@ -40,4 +40,3 @@ coverage.xml
 
 # Local testing and credentials
 google-ads.yaml
-.venv/
